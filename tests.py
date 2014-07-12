@@ -34,7 +34,7 @@ class TestSequenceFunctions(unittest.TestCase):
         axiom = list('F')
         rules = {'F':'F-F+F+F-F'}
         steps = 3
-        expected = "F-F+F+F-F - F-F+F+F-F + F-F+F+F-F + F-F+F+F-F - F-F+F+F-F - F-F+F+F-F - F-F+F+F-F + F-F+F+F-F + F-F+F+F-F - F-F+F+F-F + F-F+F+F-F - F-F+F+F-F + F-F+F+F-F + F-F+F+F-F - F-F+F+F-F + F-F+F+F-F - F-F+F+F-F + F-F+F+F-F + F-F+F+F-F - F-F+F+F-F - F-F+F+F-F - F-F+F+F-F + F-F+F+F-F + F-F+F+F-F - F-F+F+F-F"
+        expected = "F-F+F+F-F-F-F+F+F-F+F-F+F+F-F+F-F+F+F-F-F-F+F+F-F-F-F+F+F-F-F-F+F+F-F+F-F+F+F-F+F-F+F+F-F-F-F+F+F-F+F-F+F+F-F-F-F+F+F-F+F-F+F+F-F+F-F+F+F-F-F-F+F+F-F+F-F+F+F-F-F-F+F+F-F+F-F+F+F-F+F-F+F+F-F-F-F+F+F-F-F-F+F+F-F-F-F+F+F-F+F-F+F+F-F+F-F+F+F-F-F-F+F+F-F"
         result = app.lsystem(steps,axiom,rules)
         self.assertEqual(expected,result)
         
