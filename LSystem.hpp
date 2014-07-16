@@ -1,6 +1,6 @@
 #include <string>
 #include <map>
-
+#include <sstream>
 using namespace std;
 #ifndef LSystem_H
 #define LSystem_H
