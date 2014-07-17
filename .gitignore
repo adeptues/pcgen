@@ -3,3 +3,8 @@ env
 *.out
 utests
 gtest*
+CMakeCache.txt
+CMakeFiles
+Makefile
+*.cmake
+pcgen
