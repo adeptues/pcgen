@@ -9,7 +9,8 @@ Turtle::Turtle(int x,int y,int distance,double angle){
 }
 
 void Turtle::drawWord(string word){
-  //do nothing
+  //grammar definition and what to do for each symbol
+  
 }
 
 void Turtle::moveForward(){

@@ -8,7 +8,7 @@ add_library(pcg lsystem.cpp turtle.cpp)
 #########################
 # Testing
 #########################
-# TODO refactor to have one source list and use gtest variables
+# TODO refactor  use gtest variables
 # enabled in gtest project
 enable_testing()
 add_subdirectory(gtest-1.7.0)
