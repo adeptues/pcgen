@@ -1,7 +1,4 @@
-#include <wx/wxprec.h>
-#ifndef WX_PRECOMP
-#include <wx/wx.h>
-#endif
+#include <wx/app.h>
 
 #ifndef APP_H
 #define APP_H
@@ -11,5 +8,5 @@ public:
   virtual bool OnInit();
 
 };
-wxIMPLEMENT_APP(App);
+
 #endif

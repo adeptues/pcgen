@@ -4,12 +4,24 @@ project (pcgen)
 set(EXECUTABLE_NAME "pcgen")
 set(SRCS lsystem.cpp turtle.cpp  display.cpp)
 # Configure third part cmake find modules
-#set(CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/cmake_modules"
+set(CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/cmake_modules"
+
+# Wx widgets config
+find_package(wxWidgets COMPONENTS core base REQUIRED)
+# Should auto configure
+include( "${wxWidgets_USE_FILE}" )
+
+# If we build for windows systems, we also include the resource file
+# containing the manifest, icon and other resources
+if(WIN32)
+  set(SRCS ${SRCS} minimal.rc)
+endif(WIN32)
+
 #${CMAKE_MODULE_PATH})
 # check sfml installed
 #find_package(SFML 2 REQUIRED system window graphics network audio)
-
 add_executable(${EXECUTABLE_NAME} app.cpp ${SRCS})
+target_link_libraries(${EXECUTABLE_NAME} ${wxWidgets_LIBRARIES}))#wiered shit 
 #target_link_libraries(${EXECUTABLE_NAME} ${SFML_LIBRARIES})
 
 # Linkable library for unit tests

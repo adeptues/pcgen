@@ -1,4 +1,4 @@
-#include <wx/frame.h>
+#include "wx/frame.h"
 
 #ifndef  DISPLAY_H
 #define DISPLAY_H
