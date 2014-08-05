@@ -7,3 +7,7 @@ consists of:
 
 # TODO
 - change to use proper build system cmake instead of hand rolled shell scripts
+
+To install wx widgets doo
+
+- sudo apt-get install libwxbase2.8-* libwxgtk2.8-dev libwxgtk2.8-dbg

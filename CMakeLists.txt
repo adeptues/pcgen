@@ -1,41 +1,54 @@
-cmake_minimum_required (VERSION 2.8.8)
-project (pcgen)
-# Configure project variables
+#Change this if you need to target a specific CMake version
+cmake_minimum_required(VERSION 2.6)
+project(myproject)
+
+# Enable debug symbols by default
+if(CMAKE_BUILD_TYPE STREQUAL "")
+  set(CMAKE_BUILD_TYPE Debug)
+endif()
+# (you can also set it on the command line: -D CMAKE_BUILD_TYPE=Release)
+
+# Set version information in a config.h file
+set(myproject_VERSION_MAJOR 1)
+set(myproject_VERSION_MINOR 0)
+configure_file(
+  "${PROJECT_SOURCE_DIR}/config.h.in"
+  "${PROJECT_BINARY_DIR}/config.h"
+  )
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11")
+#include_directories("${PROJECT_BINARY_DIR}")
+set(SRC_LIST drawpanel.cpp app.cpp lsystem.cpp display.cpp turtle.cpp)
+# Define sources and executable
 set(EXECUTABLE_NAME "pcgen")
-set(SRCS lsystem.cpp turtle.cpp  display.cpp)
-# Configure third part cmake find modules
-set(CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/cmake_modules"
+add_executable(${EXECUTABLE_NAME} ${SRC_LIST})
 
-# Wx widgets config
+# wxWidgets config
+set(wxWidgets_CONFIGURATION mswu)
 find_package(wxWidgets COMPONENTS core base REQUIRED)
-# Should auto configure
-include( "${wxWidgets_USE_FILE}" )
+include(${wxWidgets_USE_FILE})
+target_link_libraries(${EXECUTABLE_NAME} ${wxWidgets_LIBRARIES})
 
-# If we build for windows systems, we also include the resource file
-# containing the manifest, icon and other resources
-if(WIN32)
-  set(SRCS ${SRCS} minimal.rc)
-endif(WIN32)
+# Unittesting gtest
+# TODO
 
-#${CMAKE_MODULE_PATH})
-# check sfml installed
+# Detect and add SFML
+#set(CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/cmake_modules" ${CMAKE_MODULE_PATH})
+#Find any version 2.X of SFML
+#See the FindSFML.cmake file for additional details and instructions
 #find_package(SFML 2 REQUIRED system window graphics network audio)
-add_executable(${EXECUTABLE_NAME} app.cpp ${SRCS})
-target_link_libraries(${EXECUTABLE_NAME} ${wxWidgets_LIBRARIES}))#wiered shit 
-#target_link_libraries(${EXECUTABLE_NAME} ${SFML_LIBRARIES})
-
-# Linkable library for unit tests
-add_library(pcg ${SRCS})
+#if(SFML_FOUND)
+#  include_directories(${SFML_INCLUDE_DIR})
+#  target_link_libraries(${EXECUTABLE_NAME} ${SFML_LIBRARIES})
+#endif()
 
 
-#########################
-# Testing
-#########################
-# TODO refactor  use gtest variables
-# enabled in gtest project
-enable_testing()
-add_subdirectory(gtest-1.7.0)
-include_directories(gtest-1.7.0/include)
-add_executable(utests tests.cpp)
-target_link_libraries(utests gtest pthread pcg)
-add_test(NAME ltests COMMAND utests)
+# Install target
+install(TARGETS ${EXECUTABLE_NAME} DESTINATION bin)
+
+
+# CPack packaging
+include(InstallRequiredSystemLibraries)
+set(CPACK_RESOURCE_FILE_LICENSE "${CMAKE_SOURCE_DIR}/COPYING")
+set(CPACK_PACKAGE_VERSION_MAJOR "${myproject_VERSION_MAJOR}")
+set(CPACK_PACKAGE_VERSION_MINOR "${myproject_VERSION_MINOR}")
+include(CPack)

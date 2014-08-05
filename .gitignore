@@ -10,3 +10,7 @@ Makefile
 pcgen
 Testing
 *.a
+config.h
+.kdev4
+*.kdev4
+.kdev*
