@@ -1,13 +1,16 @@
+import turtle
+
+class Lsystem:
 
 
-class lsystem:
-
-    def __init__(self):
+    def __init__(self,turtle):
         self.rules = {}
         self.rules['A'] = 'AB'
         self.rules['B'] = 'A'
-        self.rules['F'] = 'F-F+F+F-F'
-    
+        self.rules['F'] = 'F+F-F-F+F'
+        self.turts = turtle
+
+        
     def head(self,coll):#TODO make private
         """
         
@@ -40,12 +43,25 @@ class lsystem:
         if len(seed) == 0:
             return acc
         else:
-            first = head(seed)
+            first = self.head(seed)
             product = list(first)
             if self.rules.has_key(first):
                 product = list(self.rules[first])
-            return rewrite_system(tail(seed),acc + product)
+            return self.rewrite_system(self.tail(seed),acc + product)
 
+    def draw(self,word):
+        #basic koch curve render expand with more render keys
+        #maybe so pass in draw routine
+        distance = 5
+        angle  = 90
+        for i in word:
+            if i is 'F':
+                self.turts.forward(distance)
+            elif i is '+':
+                self.turts.left(angle)
+            elif i is '-':
+                self.turts.right(angle)
+                
     def compute_system(self,n, initiator):
         """
         
@@ -55,7 +71,8 @@ class lsystem:
 
         """
         if n == 0:
-            return initiator
+            self.draw(initiator)
+            return "".join(initiator)
         else:
-            acc = rewrite_system(initiator,[])
-            return compute_system(n-1, acc)
+            acc = self.rewrite_system(initiator,[])
+            return self.compute_system(n-1, acc)

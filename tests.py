@@ -1,25 +1,26 @@
 
 import random
 import unittest
-import app
+import lsystem
 
 class TestSequenceFunctions(unittest.TestCase):
 
     def setUp(self):
         self.seq = range(10)
+        self.pcgen = lsystem.Lsystem()
 
     def test_rewrite(self):
         seed = ['A']
         expected = ['A','B']
         rules = {'A':'AB', 'B':'A'}
-        result = app.proc(seed,[],rules)
+        result = self.pcgen.rewrite_system(seed,[])
         self.assertEqual("".join(expected),"".join(result))
 
     def test_rewrite2(self):
         seed = list('AB')
         expected = list('ABA')
         rules = {'A':'AB', 'B':'A'}
-        result = app.proc(seed,[],rules)
+        result = self.pcgen.rewrite_system(seed,[])
         self.assertEqual("".join(expected),"".join(result))
 
     def test_koch_curve(self):
@@ -27,7 +28,7 @@ class TestSequenceFunctions(unittest.TestCase):
         rules = {'F':'F-F+F+F-F'}
         steps = 1
         expected = "F-F+F+F-F"
-        result = app.lsystem(steps,axiom,rules)
+        result = self.pcgen.compute_system(steps,axiom)
         self.assertEqual(expected,result)
     
     def test_koch_curve2(self):
@@ -35,7 +36,7 @@ class TestSequenceFunctions(unittest.TestCase):
         rules = {'F':'F-F+F+F-F'}
         steps = 3
         expected = "F-F+F+F-F-F-F+F+F-F+F-F+F+F-F+F-F+F+F-F-F-F+F+F-F-F-F+F+F-F-F-F+F+F-F+F-F+F+F-F+F-F+F+F-F-F-F+F+F-F+F-F+F+F-F-F-F+F+F-F+F-F+F+F-F+F-F+F+F-F-F-F+F+F-F+F-F+F+F-F-F-F+F+F-F+F-F+F+F-F+F-F+F+F-F-F-F+F+F-F-F-F+F+F-F-F-F+F+F-F+F-F+F+F-F+F-F+F+F-F-F-F+F+F-F"
-        result = app.lsystem(steps,axiom,rules)
+        result = self.pcgen.compute_system(steps,axiom)
         self.assertEqual(expected,result)
         
 
@@ -44,7 +45,7 @@ class TestSequenceFunctions(unittest.TestCase):
         initiator = list('A')
         rules = {'A':'AB', 'B':'A'}
         steps = 2
-        result = app.lsystem(steps,initiator,rules)
+        result = self.pcgen.compute_system(steps,initiator)
         self.assertEqual(expected, result)
 
     def test_lsystem2(self):
@@ -52,7 +53,7 @@ class TestSequenceFunctions(unittest.TestCase):
         initiator = list('A')
         rules = {'A':'AB', 'B':'A'}
         steps = 7
-        result = app.lsystem(steps,initiator,rules)
+        result = self.pcgen.compute_system(steps,initiator)
         self.assertEqual(expected, result)
 
     def test_lsystem3(self):
@@ -60,7 +61,7 @@ class TestSequenceFunctions(unittest.TestCase):
         initiator = list('A')
         rules = {'A':'AB', 'B':'A'}
         steps = 3
-        result = app.lsystem(steps,initiator,rules)
+        result = self.pcgen.compute_system(steps,initiator)
         self.assertEqual(expected, result)
     
     def test_lsystem4(self):
@@ -68,7 +69,7 @@ class TestSequenceFunctions(unittest.TestCase):
         initiator = list('A')
         rules = {'A':'AB', 'B':'A'}
         steps = 4
-        result = app.lsystem(steps,initiator,rules)
+        result = self.pcgen.compute_system(steps,initiator)
         self.assertEqual(expected, result)
 
     def test_lsystem5(self):
@@ -76,7 +77,7 @@ class TestSequenceFunctions(unittest.TestCase):
         initiator = list('A')
         rules = {'A':'AB', 'B':'A'}
         steps = 5
-        result = app.lsystem(steps,initiator,rules)
+        result = self.pcgen.compute_system(steps,initiator)
         self.assertEqual(expected, result)
 
     def test_lsystem6(self):
@@ -84,7 +85,7 @@ class TestSequenceFunctions(unittest.TestCase):
         initiator = list('A')
         rules = {'A':'AB', 'B':'A'}
         steps = 6
-        result = app.lsystem(steps,initiator,rules)
+        result = self.pcgen.compute_system(steps,initiator)
         self.assertEqual(expected, result)
 
     def test_lsystem7(self):
@@ -92,7 +93,7 @@ class TestSequenceFunctions(unittest.TestCase):
         initiator = list('A')
         rules = {'A':'AB', 'B':'A'}
         steps = 0
-        result = app.lsystem(steps,initiator,rules)
+        result = self.pcgen.compute_system(steps,initiator)
         self.assertEqual(expected, result)
 
     def test_lsystem8(self):
@@ -100,7 +101,7 @@ class TestSequenceFunctions(unittest.TestCase):
         initiator = list('A')
         rules = {'A':'AB', 'B':'A'}
         steps = 1
-        result = app.lsystem(steps,initiator,rules)
+        result = self.pcgen.compute_system(steps,initiator)
         self.assertEqual(expected, result)
     
 
