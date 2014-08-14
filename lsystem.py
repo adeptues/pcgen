@@ -3,6 +3,7 @@ class Lsystem:
     
     #constants do not modify
     KOCH_CURVE = "KOCH_CURVE"
+    KOCH_ISLAND = "KOCH_ISLAND"
     DRAGON = "DRAGON"
     F_PLANT = "FRACTAL_PLANT"
 
@@ -17,7 +18,11 @@ class Lsystem:
             self.rules['Y'] = 'FX-Y'
             self.axiom = 'FX'
         elif system_type is Lsystem.F_PLANT:
-            raise NotImplementedError("The fractal plant is not implemented yet!")
+            self.rules['F'] = 'FF+[+F-F-F]-[-F+F+F]'
+            self.axiom = 'F'
+        elif system_type is Lsystem.KOCH_ISLAND:
+            self.rules['F'] = 'F-F+F+FF-F-F+F'
+            self.axiom = "F-F-F-F"
         else:
             raise Exception('Must have a valid system type')
             

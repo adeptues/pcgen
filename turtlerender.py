@@ -12,8 +12,9 @@ class turtlerender:
         self.myturtle.color("red", "green")
         self.myturtle.penup()
         self.myturtle.setpos(-200.00,-200.00)
+        self.myturtle.speed(200)
         self.myturtle.pendown()
-
+        self.myturtle.setheading(90)
     def exitonclick(self):
         turtle.exitonclick()
 
@@ -25,12 +26,25 @@ class turtlerender:
         
         TODO parse the remaining grammar, add support for branching sequences
         """
-        distance = 5
-        angle  = 90
+        state = []
+        self.myturtle.hideturtle()
         for i in word:
             if i is 'F':
-                self.myturtle.forward(distance)
+                self.myturtle.forward(self.distance)
             elif i is '+':
-                self.myturtle.left(angle)
+                self.myturtle.right(self.angle)
             elif i is '-':
-                self.myturtle.right(angle)
+                self.myturtle.left(self.angle)
+            elif i is '[':
+                pos = self.myturtle.pos()
+                heading = self.myturtle.heading()
+                state.append((pos,heading))
+            elif i is ']':
+                info  = state.pop()
+                pos = info[0]
+                heading = info[1]
+                self.myturtle.penup()
+                self.myturtle.setpos(pos)
+                self.myturtle.setheading(heading)
+                self.myturtle.pendown()
+        self.myturtle.showturtle()
