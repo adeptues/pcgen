@@ -12,3 +12,7 @@ consists of:
 To install wx widgets doo
 
 - sudo apt-get install libwxbase2.8-* libwxgtk2.8-dev libwxgtk2.8-dbg
+
+#problems
+
+need to sovle the recursion problem as python doesnot have tail call opitmisation

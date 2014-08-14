@@ -1,14 +1,26 @@
-import turtle
 
 class Lsystem:
+    
+    #constants do not modify
+    KOCH_CURVE = "KOCH_CURVE"
+    DRAGON = "DRAGON"
+    F_PLANT = "FRACTAL_PLANT"
 
-
-    def __init__(self,turtle):
+    def __init__(self,system_type):
         self.rules = {}
-        self.rules['A'] = 'AB'
-        self.rules['B'] = 'A'
-        self.rules['F'] = 'F+F-F-F+F'
-        self.turts = turtle
+
+        if system_type is Lsystem.KOCH_CURVE:
+            self.axiom = "F"
+            self.rules['F'] = 'F+F-F-F+F'
+        elif system_type is Lsystem.DRAGON:
+            self.rules['X'] = 'X+YF'
+            self.rules['Y'] = 'FX-Y'
+            self.axiom = 'FX'
+        elif system_type is Lsystem.F_PLANT:
+            raise NotImplementedError("The fractal plant is not implemented yet!")
+        else:
+            raise Exception('Must have a valid system type')
+            
 
         
     def head(self,coll):#TODO make private
@@ -31,7 +43,7 @@ class Lsystem:
 
         return coll[1:]
     
-    def rewrite_system(self,seed,acc):
+    def rewrite_system(self,seed,acc = []):
         """
 
         Rewrites one word in parallel. The seed is the word to be rewritten IE. A or AB such that
@@ -49,20 +61,9 @@ class Lsystem:
                 product = list(self.rules[first])
             return self.rewrite_system(self.tail(seed),acc + product)
 
-    def draw(self,word):
-        #basic koch curve render expand with more render keys
-        #maybe so pass in draw routine
-        distance = 5
-        angle  = 90
-        for i in word:
-            if i is 'F':
-                self.turts.forward(distance)
-            elif i is '+':
-                self.turts.left(angle)
-            elif i is '-':
-                self.turts.right(angle)
+
                 
-    def compute_system(self,n, initiator):
+    def compute_system(self,n,initiator = ""):
         """
         
         Computes a whole lsystem expansion of an axiom or seed this is the initator according to a set of rules
@@ -71,8 +72,9 @@ class Lsystem:
 
         """
         if n == 0:
-            self.draw(initiator)
             return "".join(initiator)
         else:
-            acc = self.rewrite_system(initiator,[])
+            if initiator is '':
+                initiator = self.axiom
+            acc = self.rewrite_system(initiator)
             return self.compute_system(n-1, acc)
