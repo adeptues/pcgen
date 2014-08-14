@@ -113,10 +113,24 @@ class TestLSystem(unittest.TestCase):
         result = self.pcgen.compute_system(steps,initiator)
         self.assertEqual(expected, result)
     
-    def test_recursion_limit(self):
-        testls = lsystem.Lsystem(lsystem.Lsystem.DRAGON)
-        steps = 10
-        result = testls.compute_system(steps)
+
+    def test_lsystem_alt(self):
+        expected = "ABAABABAABAABABAABABA"
+        initiator = list('A')
+        rules = {'A':'AB', 'B':'A'}
+        self.pcgen.rules = rules
+        steps = 6
+        result = self.pcgen.compute_system_alt(steps,initiator)
+        self.assertEqual(expected, result)
+
+    def test_non_recursive(self):
+        axiom = list('F')
+        rules = {'F':' F+F-F-F+F'}
+        steps = 3
+        expected = "F+F-F-F+F+F+F-F-F+F-F+F-F-F+F-F+F-F-F+F+F+F-F-F+F+F+F-F-F+F+F+F-F-F+F-F+F-F-F+F-F+F-F-F+F+F+F-F-F+F-F+F-F-F+F+F+F-F-F+F-F+F-F-F+F-F+F-F-F+F+F+F-F-F+F-F+F-F-F+F+F+F-F-F+F-F+F-F-F+F-F+F-F-F+F+F+F-F-F+F+F+F-F-F+F+F+F-F-F+F-F+F-F-F+F-F+F-F-F+F+F+F-F-F+F"
+        result = self.pcgen.compute_system_alt(steps,axiom)
+        self.assertEqual(expected,result)
+
         
         
 

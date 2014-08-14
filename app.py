@@ -8,7 +8,7 @@ import turtlerender
 
 def main():
     ls = lsystem.Lsystem(lsystem.Lsystem.DRAGON)
-    system = ls.compute_system(6)
+    system = ls.compute_system_alt(10)
     tr = turtlerender.turtlerender()
     tr.draw(system)
     tr.exitonclick()

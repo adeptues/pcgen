@@ -61,7 +61,32 @@ class Lsystem:
                 product = list(self.rules[first])
             return self.rewrite_system(self.tail(seed),acc + product)
 
+    def rewrite_system_alt(self,seed,acc=[]):
+        """
+        
+        This is the alternate non recursive implementation on rewrite system
+        """
+        for i in range(len(seed)):
+            first = self.head(seed)
+            product = list(first)
+            if self.rules.has_key(first):
+                product = list(self.rules[first])
+            acc = acc+product
+            seed  = self.tail(seed)
+        return acc
+            #TODO update so doesnt change function args as sideeffects
+    def compute_system_alt(self,n,initiator=""):
+        """
+        
+        This is the alternate implementation of compute_system that uses good old iteration, while this algorithm
+        is a genuine recursive one it should still work find and avoid pythons limit on recursion
 
+        """
+        for i in range(n):
+            if initiator is '':
+                initiator = self.axiom
+            initiator = self.rewrite_system_alt(initiator)
+        return "".join(initiator)
                 
     def compute_system(self,n,initiator = ""):
         """
@@ -70,6 +95,7 @@ class Lsystem:
         for a predefined limit of expansions as specified by the parameter n, n is the number of times this should
         expand the axiom to produce a complete l system
 
+        THIS IS DEPRACATED AS NO TAIL  CALL OPTIMISATION
         """
         if n == 0:
             return "".join(initiator)
